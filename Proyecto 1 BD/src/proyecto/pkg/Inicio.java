@@ -167,7 +167,6 @@ public class Inicio extends javax.swing.JFrame {
         String mes="";
         if(entrada == JOptionPane.OK_OPTION){
             mes = (String)m.getSelectedItem();
-       
         }
         String [] anios = {"2020", "2021"};
         JComboBox a = new JComboBox(anios);
@@ -175,7 +174,6 @@ public class Inicio extends javax.swing.JFrame {
         String anio="";
         if(entrada2 == JOptionPane.OK_OPTION){
             anio = (String)a.getSelectedItem();
-        
         }
         ReporteR reporte = new ReporteR(mes, anio);
         desktopPane.add(reporte);

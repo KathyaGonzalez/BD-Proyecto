@@ -5,6 +5,7 @@
  */
 package proyecto.pkg;
 
+import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 
 /**
@@ -18,8 +19,18 @@ public class GastoR extends javax.swing.JInternalFrame {
      */
     public GastoR() {
         initComponents();
+        this.limpiar();
     }
-
+    public DefaultListModel limpiar(){
+        DefaultListModel  modelo = new DefaultListModel();
+        jList1.setModel(modelo);
+        return modelo;
+    }
+    public void agregar(){
+        DefaultListModel modelo = (DefaultListModel) this.jList1.getModel();
+        modelo.addElement(this.jTextField1.getText());
+        this.jList1.setModel(modelo);
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -117,7 +128,9 @@ public class GastoR extends javax.swing.JInternalFrame {
         }else{
             Gasto gasto = new Gasto();
             gasto.setDescripcion(jTextField1.getText());
-           
+            //agregar a Lista
+            this.agregar();
+            this.jTextField1.setText("");
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
