@@ -19,6 +19,10 @@ public class Inicio extends javax.swing.JFrame {
      */
     public Inicio() {
         initComponents();
+        this.setLocationRelativeTo(null);
+        this.setTitle("Hospital Cepromedic Finanzas");
+        this.setSize(780, 480);
+       
     }
 
     /**
@@ -43,6 +47,8 @@ public class Inicio extends javax.swing.JFrame {
         contentMenuItem = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        desktopPane.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
         fileMenu.setMnemonic('f');
         fileMenu.setText("Registro");
