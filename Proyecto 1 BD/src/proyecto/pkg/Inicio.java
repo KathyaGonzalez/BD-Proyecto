@@ -5,6 +5,7 @@
  */
 package proyecto.pkg;
 
+import Conex.Conexion;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 
@@ -18,6 +19,8 @@ public class Inicio extends javax.swing.JFrame {
      * Creates new form NewMDIApplication
      */
     public Inicio() {
+        Conexion con= new Conexion();
+        //con.conector();//por si quieren hacer pruebas de su base de datos y saber si sí conectó
         initComponents();
         this.setLocationRelativeTo(null);
         this.setTitle("Hospital Cepromedic Finanzas");
