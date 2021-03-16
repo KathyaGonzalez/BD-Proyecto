@@ -4,7 +4,6 @@
  * and open the template in the editor.
  */
 package proyecto.pkg;
-
 import Conex.Conexion;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
