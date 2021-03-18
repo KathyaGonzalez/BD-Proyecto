@@ -82,7 +82,7 @@ public class IngresoR extends javax.swing.JInternalFrame {
             }
         });
 
-        jLabel1.setText("Nombre de la Cuenta:");
+        jLabel1.setText("Nombre");
 
         jComboBox1.setEditable(true);
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { }));

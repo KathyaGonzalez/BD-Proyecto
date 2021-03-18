@@ -12,12 +12,12 @@ import javax.swing.JOptionPane;
  *
  * @author libreria6
  */
-public class GastoR extends javax.swing.JInternalFrame {
+public class ServicioR extends javax.swing.JInternalFrame {
 
     /**
      * Creates new form GastoR
      */
-    public GastoR() {
+    public ServicioR() {
         initComponents();
         this.limpiar();
     }
@@ -50,9 +50,9 @@ public class GastoR extends javax.swing.JInternalFrame {
 
         setVisible(true);
 
-        jLabel1.setText("Gasto");
+        jLabel1.setText("Servicio");
 
-        jLabel2.setText("Gastos Registrados");
+        jLabel2.setText("Tipos de servicios registrados");
 
         jScrollPane1.setViewportView(jList1);
 
@@ -82,10 +82,6 @@ public class GastoR extends javax.swing.JInternalFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jTextField1))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(142, 142, 142)
-                        .addComponent(jLabel2)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jButton2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -94,6 +90,10 @@ public class GastoR extends javax.swing.JInternalFrame {
                         .addContainerGap()
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 374, Short.MAX_VALUE)))
                 .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jLabel2)
+                .addGap(123, 123, 123))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -106,7 +106,7 @@ public class GastoR extends javax.swing.JInternalFrame {
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 10, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
                     .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -124,9 +124,9 @@ public class GastoR extends javax.swing.JInternalFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         if("".equals(this.jTextField1.getText())){
-            JOptionPane.showMessageDialog(this, "Ingrese Gasto");
+            JOptionPane.showMessageDialog(this, "Ingrese Servicio");
         }else{
-            Gasto gasto = new Gasto();
+            ServicioC gasto = new ServicioC();
             gasto.setDescripcion(jTextField1.getText());
             //agregar a Lista
             this.agregar();

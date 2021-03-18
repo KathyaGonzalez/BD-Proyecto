@@ -56,7 +56,7 @@ public class Inicio extends javax.swing.JFrame {
         fileMenu.setText("Registro");
 
         saveMenuItem.setMnemonic('s');
-        saveMenuItem.setText("Librador");
+        saveMenuItem.setText("Cuenta");
         saveMenuItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 saveMenuItemActionPerformed(evt);
@@ -65,7 +65,7 @@ public class Inicio extends javax.swing.JFrame {
         fileMenu.add(saveMenuItem);
 
         openMenuItem.setMnemonic('o');
-        openMenuItem.setText("Beneficiario");
+        openMenuItem.setText("Documento");
         openMenuItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 openMenuItemActionPerformed(evt);
@@ -74,7 +74,7 @@ public class Inicio extends javax.swing.JFrame {
         fileMenu.add(openMenuItem);
 
         saveAsMenuItem.setMnemonic('a');
-        saveAsMenuItem.setText("Gasto");
+        saveAsMenuItem.setText("Servicio");
         saveAsMenuItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 saveAsMenuItemActionPerformed(evt);
@@ -139,8 +139,8 @@ public class Inicio extends javax.swing.JFrame {
 
     private void openMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openMenuItemActionPerformed
         // TODO add your handling code here:
-        BeneficiarioR beneficiario = new BeneficiarioR();
-        desktopPane.add(beneficiario);
+       Documento doc = new Documento();
+        desktopPane.add(doc);
     }//GEN-LAST:event_openMenuItemActionPerformed
 
     private void cutMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cutMenuItemActionPerformed
@@ -151,13 +151,13 @@ public class Inicio extends javax.swing.JFrame {
 
     private void saveMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveMenuItemActionPerformed
         // TODO add your handling code here:
-        LibradorR librador = new LibradorR();
+        Cuenta librador = new Cuenta();
         desktopPane.add(librador);
     }//GEN-LAST:event_saveMenuItemActionPerformed
 
     private void saveAsMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveAsMenuItemActionPerformed
         // TODO add your handling code here:
-        GastoR gasto = new GastoR();
+        ServicioR gasto = new ServicioR();
         desktopPane.add(gasto);
     }//GEN-LAST:event_saveAsMenuItemActionPerformed
 

@@ -9,7 +9,7 @@ package proyecto.pkg;
  *
  * @author libreria6
  */
-public class Gasto {
+public class ServicioC {
     String descripcion;
 
     public void setDescripcion(String descricpion) {

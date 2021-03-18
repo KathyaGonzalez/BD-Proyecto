@@ -9,29 +9,29 @@ package proyecto.pkg;
  *
  * @author libreria6
  */
-public class LibradorC {
-     String Nombres;
-    String Apellidos;
+public class CuentaR {
+     String Nombre;
+    String Banco;
     String NoCuenta;
 
-    public void setNombres(String Nombres) {
-        this.Nombres = Nombres;
+    public void setNombre(String Nombre) {
+        this.Nombre = Nombre;
     }
 
-    public void setApellidos(String Apellidos) {
-        this.Apellidos = Apellidos;
+    public void setBanco(String Banco) {
+        this.Banco = Banco;
     }
 
     public void setNoCuenta(String NoCuenta) {
         this.NoCuenta = NoCuenta;
     }
 
-    public String getNombres() {
-        return Nombres;
+    public String getNombre() {
+        return Nombre;
     }
 
-    public String getApellidos() {
-        return Apellidos;
+    public String getBanco() {
+        return Banco;
     }
 
     public String getNoCuenta() {
