@@ -5,6 +5,11 @@
  */
 package proyecto.pkg;
 
+import Conex.Conexion;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 
@@ -13,11 +18,12 @@ import javax.swing.JOptionPane;
  * @author libreria6
  */
 public class ServicioR extends javax.swing.JInternalFrame {
-
+Conexion c= new Conexion();
     /**
      * Creates new form GastoR
      */
     public ServicioR() {
+        c.conector();
         initComponents();
         this.limpiar();
     }
@@ -131,6 +137,13 @@ public class ServicioR extends javax.swing.JInternalFrame {
             //agregar a Lista
             this.agregar();
             this.jTextField1.setText("");
+            try {
+                Statement stmt= c.con.createStatement();
+                String query= "INSERT INTO servicio (Nombre) values ("+gasto.getDescripcion()+")";
+                stmt.executeUpdate(query);
+            } catch (SQLException ex) {
+                Logger.getLogger(Documento.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 

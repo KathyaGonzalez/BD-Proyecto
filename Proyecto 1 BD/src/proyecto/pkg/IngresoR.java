@@ -5,16 +5,23 @@
  */
 package proyecto.pkg;
 
+import Conex.Conexion;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  *
  * @author libreria6
  */
 public class IngresoR extends javax.swing.JInternalFrame {
-
+Conexion c= new Conexion();
     /**
      * Creates new form IngresoR
      */
     public IngresoR() {
+        c.conector();
         initComponents();
     }
 
@@ -230,7 +237,22 @@ public class IngresoR extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
+//################################################################################        
+//aquí tendrían que venirse los valores de los campos que hay en el form
+//################################################################################
+        double monto= 0.0;
+        String fecha= "";
+        boolean tipo= false;
+        int no_Doc= 1,cuenta_No=1,servicio_Id=1,documento_Id=1;
+        String descripcion="";
+        try {
+                Statement stmt= c.con.createStatement();
+                String query= "INSERT INTO transaccion (Monto,Fecha,Tipo,No_doc,Descripcion,cuenta_No,servicio_Id,documento_Id) values ("+monto+","+fecha+","+tipo+","+no_Doc+","+descripcion+","+cuenta_No+","+servicio_Id+","+documento_Id+")";
+                stmt.executeUpdate(query);
+            } catch (SQLException ex) {
+                Logger.getLogger(Documento.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        
         this.setVisible(false);
     }//GEN-LAST:event_jButton1ActionPerformed
 

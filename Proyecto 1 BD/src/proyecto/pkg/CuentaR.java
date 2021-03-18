@@ -12,7 +12,7 @@ package proyecto.pkg;
 public class CuentaR {
      String Nombre;
     String Banco;
-    String NoCuenta;
+    Integer NoCuenta;
 
     public void setNombre(String Nombre) {
         this.Nombre = Nombre;
@@ -22,7 +22,7 @@ public class CuentaR {
         this.Banco = Banco;
     }
 
-    public void setNoCuenta(String NoCuenta) {
+    public void setNoCuenta(Integer NoCuenta) {
         this.NoCuenta = NoCuenta;
     }
 
@@ -34,7 +34,7 @@ public class CuentaR {
         return Banco;
     }
 
-    public String getNoCuenta() {
+    public Integer getNoCuenta() {
         return NoCuenta;
     }
     

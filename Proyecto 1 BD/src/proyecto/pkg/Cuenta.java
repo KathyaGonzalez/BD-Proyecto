@@ -5,6 +5,11 @@
  */
 package proyecto.pkg;
 
+import Conex.Conexion;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -12,11 +17,12 @@ import javax.swing.JOptionPane;
  * @author libreria6
  */
 public class Cuenta extends javax.swing.JInternalFrame {
-
+Conexion cN= new Conexion();
     /**
      * Creates new form LibradorR
      */
     public Cuenta() {
+        cN.conector();
         initComponents();
     }
 
@@ -138,7 +144,14 @@ public class Cuenta extends javax.swing.JInternalFrame {
         CuentaR persona = new CuentaR();
         persona.setNombre(this.jTextField1.getText());
         persona.setBanco(this.jTextField2.getText());
-        persona.setNoCuenta(this.jTextField3.getText());
+        persona.setNoCuenta(Integer.parseInt(this.jTextField3.getText()));
+        try {
+                Statement stmt = cN.con.createStatement();
+                String query= "INSERT INTO cuenta (Nombre_Asignado,Banco,No_cuenta) values ("+persona.getNombre()+","+persona.getBanco()+","+persona.getNoCuenta()+")";
+                stmt.executeUpdate(query);
+            } catch (SQLException ex) {
+                Logger.getLogger(Documento.class.getName()).log(Level.SEVERE, null, ex);
+            }
         this.jTextField1.setText("");
          this.jTextField2.setText("");
           this.jTextField3.setText("");

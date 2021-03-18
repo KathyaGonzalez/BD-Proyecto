@@ -11,7 +11,7 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 public class Conexion {
-    private static Connection con;
+    public Connection con;
     private static final String driver="com.mysql.jdbc.Driver";
     private static final String user="root"; //esto no lo toquen, todo va a ser en root supongo, si alguien le colocó otro usuario pues cambienlo
     private static final String pass=""; //aquí tiene que ir su contra personal de la bd
