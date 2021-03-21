@@ -25,7 +25,7 @@ Conexion c= new Conexion();
     public Documento() {
         c.conector();
         initComponents();
-        this.limpiar();
+        this.jList1.setModel(c.MostrarDoc());
     }
     public DefaultListModel limpiar(){
         DefaultListModel  modelo = new DefaultListModel();
@@ -138,7 +138,7 @@ Conexion c= new Conexion();
             this.jTextField1.setText("");
             try {
                 Statement stmt= c.con.createStatement();
-                String query= "INSERT INTO documento (Nombre) values ("+declaracion+")";
+                String query= "INSERT INTO documento (Nombre) values ('"+declaracion+"')";
                 stmt.executeUpdate(query);
             } catch (SQLException ex) {
                 Logger.getLogger(Documento.class.getName()).log(Level.SEVERE, null, ex);

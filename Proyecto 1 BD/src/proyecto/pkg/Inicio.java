@@ -13,11 +13,12 @@ import javax.swing.JOptionPane;
  * @author libreria6
  */
 public class Inicio extends javax.swing.JFrame {
-
+Conexion c= new Conexion();
     /**
      * Creates new form NewMDIApplication
      */
     public Inicio() {
+        c.conector();
         initComponents();
         this.setLocationRelativeTo(null);
         this.setTitle("Hospital Cepromedic Finanzas");

@@ -25,7 +25,7 @@ Conexion c= new Conexion();
     public ServicioR() {
         c.conector();
         initComponents();
-        this.limpiar();
+        this.jList1.setModel(c.MostrarServ());
     }
     public DefaultListModel limpiar(){
         DefaultListModel  modelo = new DefaultListModel();
@@ -139,10 +139,10 @@ Conexion c= new Conexion();
             this.jTextField1.setText("");
             try {
                 Statement stmt= c.con.createStatement();
-                String query= "INSERT INTO servicio (Nombre) values ("+gasto.getDescripcion()+")";
+                String query= "INSERT INTO servicio (Tipo) values ('"+gasto.getDescripcion()+"')";
                 stmt.executeUpdate(query);
             } catch (SQLException ex) {
-                Logger.getLogger(Documento.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(ServicioR.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }//GEN-LAST:event_jButton1ActionPerformed

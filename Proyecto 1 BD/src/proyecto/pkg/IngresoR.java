@@ -10,6 +10,12 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
+import java.util.ArrayList;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -17,12 +23,21 @@ import java.util.logging.Logger;
  */
 public class IngresoR extends javax.swing.JInternalFrame {
 Conexion c= new Conexion();
+PreparedStatement ps;
+ResultSet rs;
+ResultSetMetaData rsm;
+DefaultTableModel dtm;
     /**
      * Creates new form IngresoR
      */
     public IngresoR() {
         c.conector();
         initComponents();
+        Vaciado();
+        this.jComboBox1.setModel(c.Obt_Codigo());
+        this.jComboBox2.setModel(c.Obt_Doc());
+        this.jComboBox3.setModel(c.Obt_Serv());
+        
     }
 
     /**
@@ -56,6 +71,10 @@ Conexion c= new Conexion();
         jLabel10 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTextArea1 = new javax.swing.JTextArea();
+        jLabel11 = new javax.swing.JLabel();
+        jTextField7 = new javax.swing.JTextField();
+        jTextField8 = new javax.swing.JTextField();
+        jLabel12 = new javax.swing.JLabel();
 
         jRadioButtonMenuItem1.setSelected(true);
         jRadioButtonMenuItem1.setText("jRadioButtonMenuItem1");
@@ -65,7 +84,13 @@ Conexion c= new Conexion();
         setMaximizable(true);
         setVisible(true);
 
-        jLabel5.setText("Fecha:");
+        jTextField5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField5ActionPerformed(evt);
+            }
+        });
+
+        jLabel5.setText("Día:");
 
         jTextField6.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -93,6 +118,11 @@ Conexion c= new Conexion();
 
         jComboBox1.setEditable(true);
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { }));
+        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox1ActionPerformed(evt);
+            }
+        });
 
         jButton1.setText("Aceptar");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -138,6 +168,10 @@ Conexion c= new Conexion();
         jTextArea1.setRows(3);
         jScrollPane2.setViewportView(jTextArea1);
 
+        jLabel11.setText("Mes:");
+
+        jLabel12.setText("Año:");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -145,7 +179,7 @@ Conexion c= new Conexion();
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 571, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1)
                     .addComponent(jScrollPane2)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -160,11 +194,19 @@ Conexion c= new Conexion();
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel3)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jTextField3)
+                                .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jLabel5)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jLabel11)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 7, Short.MAX_VALUE)
+                                .addComponent(jLabel12)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jTextField8, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
@@ -204,7 +246,11 @@ Conexion c= new Conexion();
                     .addComponent(jLabel3)
                     .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel5)
-                    .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel11)
+                    .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextField8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel12))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
@@ -221,7 +267,7 @@ Conexion c= new Conexion();
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton2)
                     .addComponent(jButton1))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(14, Short.MAX_VALUE))
         );
 
         pack();
@@ -240,23 +286,142 @@ Conexion c= new Conexion();
 //################################################################################        
 //aquí tendrían que venirse los valores de los campos que hay en el form
 //################################################################################
-        double monto= 0.0;
-        String fecha= "";
-        boolean tipo= false;
-        int no_Doc= 1,cuenta_No=1,servicio_Id=1,documento_Id=1;
-        String descripcion="";
-        try {
+        
+        // ingresar campos
+        if(VerificarCampos()==0)
+        {
+            String fecha= jTextField8.getText()+"-"+jTextField7.getText()+"-"+this.jTextField5.getText();
+            String descripcion=jTextArea1.getText();
+            try {
+                Integer tipo= 1; //los 1 son ingresos
+                double monto= Double.valueOf(jTextField3.getText());
+                Integer no_Doc= Integer.parseInt(jTextField6.getText());
+                Integer cuenta_No=Integer.parseInt(jComboBox1.getSelectedItem().toString());
+                Integer servicio_Id=Integer.parseInt(jComboBox3.getSelectedItem().toString());
+                Integer documento_Id=Integer.parseInt(jComboBox2.getSelectedItem().toString());
                 Statement stmt= c.con.createStatement();
-                String query= "INSERT INTO transaccion (Monto,Fecha,Tipo,No_doc,Descripcion,cuenta_No,servicio_Id,documento_Id) values ("+monto+","+fecha+","+tipo+","+no_Doc+","+descripcion+","+cuenta_No+","+servicio_Id+","+documento_Id+")";
+                String query= "INSERT INTO transaccion (Monto,Fecha,Tipo,No_doc,Descripcion,cuenta_No,servicio_Id,documento_Id) values ('"+monto+"','"+fecha+"','"+tipo+"','"+no_Doc+"','"+descripcion+"','"+cuenta_No+"','"+servicio_Id+"','"+documento_Id+"')";
                 stmt.executeUpdate(query);
             } catch (SQLException ex) {
-                Logger.getLogger(Documento.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(IngresoR.class.getName()).log(Level.SEVERE, null, ex);
             }
+            Vaciado();
+        }
+        else
+        {
+            JOptionPane.showMessageDialog(this, "Asegurese de llenar los campos correctamente");
+        }
         
-        this.setVisible(false);
+        //Limpiar Tabla
+        
+        LimpiarTabla();
+        
+        //mostrar tabla
+        try{
+            
+            //Impresion en orden
+           ps = (PreparedStatement) c.con.prepareStatement("SELECT c.No_cuenta, c.Nombre_Asignado, t.Fecha, s.Tipo, t.Monto FROM transaccion t \n" +
+            "INNER JOIN cuenta c ON t.cuenta_No = c.No_cuenta\n" + "INNER JOIN servicio s ON t.servicio_Id = s.Id ORDER BY Fecha ASC");
+           rs=ps.executeQuery();
+           rsm = (ResultSetMetaData)rs.getMetaData();
+           ArrayList<Object[]> data = new ArrayList<> ();
+           while(rs.next()){
+               Object[] rows = new Object[rsm.getColumnCount()];
+               for (int i=0; i<rows.length; i++){
+                   rows[i] = rs.getObject(i+1);
+               }
+               data.add(rows);
+           }
+           dtm=(DefaultTableModel)this.jTable1.getModel();
+           for(int i=0; i<data.size(); i++){
+               dtm.addRow(data.get(i));
+           }   
+        }catch (SQLException e){
+            JOptionPane.showMessageDialog(rootPane, e.getMessage());
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    
+    //Funcion para limpiar la tabla 
+    
+    public void LimpiarTabla (){
+        DefaultTableModel modelo = (DefaultTableModel)jTable1.getModel();
+        while(modelo.getRowCount()>0){
+            for(int i= -1; i<modelo.getRowCount(); i++){
+            modelo.removeRow(i);
+        }
+        }
+        
+    }
+    
+    private void jTextField5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField5ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField5ActionPerformed
 
+    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
+        
+    }//GEN-LAST:event_jComboBox1ActionPerformed
+
+    
+    int VerificarCampos()
+    {
+        int cero=0;
+        if("".equals(jComboBox1.getSelectedItem().toString()))
+        {
+            cero++;
+        }
+        else if(c.Buscar("cuenta", jComboBox1.getSelectedItem().toString())==false)
+        {
+            cero++;
+        }
+        // ########################## documento
+        if("".equals(jComboBox2.getSelectedItem().toString()))
+        {
+            cero++;
+        }
+        else if(c.Buscar("documento", jComboBox2.getSelectedItem().toString())==false)
+        {
+            cero++;
+        }
+        // ############## servicio
+        if("".equals(jComboBox3.getSelectedItem().toString()))
+        {
+            cero++;
+        }
+        else if(c.Buscar("servicio", jComboBox3.getSelectedItem().toString())==false)
+        {
+            cero++;
+        }
+        
+        if("".equals(jTextField8.getText())&&!"".equals(jTextField7.getText())&&!"".equals(jTextField5.getText()))
+        {
+            cero++;
+        }
+        if("".equals(jTextField3.getText()))
+        {
+            cero++;
+        }
+        if("".equals(jTextField6.getText()))
+        {
+            cero++;
+        }
+        return cero;
+    }
+    
+    private void Vaciado()
+    {
+        jComboBox1.setSelectedItem("");
+        jComboBox2.setSelectedItem("");
+        jComboBox3.setSelectedItem("");
+        jTextField2.setText("");
+        jTextField3.setText("");
+        jTextField5.setText("");
+        jTextField6.setText("");
+        jTextField7.setText("");
+        jTextField8.setText("");
+        jTextArea1.setText("");
+    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
@@ -265,6 +430,8 @@ Conexion c= new Conexion();
     private javax.swing.JComboBox<String> jComboBox3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
@@ -280,5 +447,7 @@ Conexion c= new Conexion();
     private javax.swing.JTextField jTextField3;
     private javax.swing.JTextField jTextField5;
     private javax.swing.JTextField jTextField6;
+    private javax.swing.JTextField jTextField7;
+    private javax.swing.JTextField jTextField8;
     // End of variables declaration//GEN-END:variables
 }

@@ -147,10 +147,10 @@ Conexion cN= new Conexion();
         persona.setNoCuenta(Integer.parseInt(this.jTextField3.getText()));
         try {
                 Statement stmt = cN.con.createStatement();
-                String query= "INSERT INTO cuenta (Nombre_Asignado,Banco,No_cuenta) values ("+persona.getNombre()+","+persona.getBanco()+","+persona.getNoCuenta()+")";
+                String query= "INSERT INTO cuenta (Nombre_Asignado,Banco,No_cuenta) values ('"+persona.getNombre()+"','"+persona.getBanco()+"','"+persona.getNoCuenta()+"')";
                 stmt.executeUpdate(query);
             } catch (SQLException ex) {
-                Logger.getLogger(Documento.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(Cuenta.class.getName()).log(Level.SEVERE, null, ex);
             }
         this.jTextField1.setText("");
          this.jTextField2.setText("");
