@@ -91,6 +91,11 @@ DefaultTableModel dtm;
 
         jComboBox3.setEditable(true);
         jComboBox3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { }));
+        jComboBox3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox3ActionPerformed(evt);
+            }
+        });
 
         jLabel9.setText("Servicio:");
 
@@ -143,6 +148,11 @@ DefaultTableModel dtm;
 
         jComboBox2.setEditable(true);
         jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { }));
+        jComboBox2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox2ActionPerformed(evt);
+            }
+        });
 
         jLabel7.setText("Mes: ");
 
@@ -259,7 +269,10 @@ DefaultTableModel dtm;
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
-        // TODO add your handling code here:
+        if(!"".equals(jComboBox1.getSelectedItem().toString())&&!"Seleccione una clave".equals(jComboBox1.getSelectedItem().toString()))
+        {
+            jTextField2.setText(c.BuscarC("cuenta", jComboBox1.getSelectedItem().toString()));
+        }
     }//GEN-LAST:event_jComboBox1ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -277,8 +290,8 @@ DefaultTableModel dtm;
                 double monto= Double.valueOf(jTextField3.getText());
                 Integer no_Doc= Integer.parseInt(jTextField6.getText());
                 Integer cuenta_No=Integer.parseInt(jComboBox1.getSelectedItem().toString());
-                Integer servicio_Id=Integer.parseInt(jComboBox3.getSelectedItem().toString());
-                Integer documento_Id=Integer.parseInt(jComboBox2.getSelectedItem().toString());
+                Integer servicio_Id=Integer.parseInt(c.listaS.get(jComboBox3.getSelectedIndex()-1));
+                Integer documento_Id=Integer.parseInt(c.lista.get(jComboBox2.getSelectedIndex()-1));
                 Statement stmt= c.con.createStatement();
                 String query= "INSERT INTO transaccion (Monto,Fecha,Tipo,No_doc,Descripcion,cuenta_No,servicio_Id,documento_Id) values ('"+monto+"','"+fecha+"','"+tipo+"','"+no_Doc+"','"+descripcion+"','"+cuenta_No+"','"+servicio_Id+"','"+documento_Id+"')";
                 stmt.executeUpdate(query);
@@ -299,8 +312,7 @@ DefaultTableModel dtm;
         //mostrar tabla
         try{
             //Impresion tabla ordenada
-           ps = (PreparedStatement) c.con.prepareStatement("SELECT c.No_cuenta, c.Nombre_Asignado, t.Fecha, s.Tipo, t.Monto FROM transaccion t \n" +
-            "INNER JOIN cuenta c ON t.cuenta_No = c.No_cuenta\n" + "INNER JOIN servicio s ON t.servicio_Id = s.Id ORDER BY Fecha ASC");
+           ps = (PreparedStatement) c.con.prepareStatement("SELECT cuenta.No_cuenta, cuenta.Nombre_Asignado, transaccion.Fecha, servicio.Tipo, transaccion.Monto FROM transaccion INNER JOIN cuenta ON transaccion.cuenta_No = cuenta.Id  INNER JOIN servicio ON transaccion.servicio_Id = servicio.Id ORDER BY Fecha ASC");
            rs=ps.executeQuery();
            rsm = (ResultSetMetaData)rs.getMetaData();
            ArrayList<Object[]> data = new ArrayList<> ();
@@ -332,35 +344,38 @@ DefaultTableModel dtm;
         
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    private void jComboBox2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox2ActionPerformed
+        
+    }//GEN-LAST:event_jComboBox2ActionPerformed
+
+    private void jComboBox3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox3ActionPerformed
+        
+    }//GEN-LAST:event_jComboBox3ActionPerformed
+
     
     int VerificarCampos()
     {
         int cero=0;
-        if("".equals(jComboBox1.getSelectedItem().toString()))
+        int si=0;
+        if(jComboBox3.getSelectedIndex()<1||jComboBox2.getSelectedIndex()<1||jComboBox1.getSelectedIndex()<1)
         {
             cero++;
         }
-        else if(c.Buscar("cuenta", jComboBox1.getSelectedItem().toString())==false)
+        else
         {
-            cero++;
+            si = 1;
         }
-        // ########################## documento
-        if("".equals(jComboBox2.getSelectedItem().toString()))
+        if(si==1)
         {
-            cero++;
-        }
-        else if(c.Buscar("documento", jComboBox2.getSelectedItem().toString())==false)
-        {
-            cero++;
-        }
-        // ############## servicio
-        if("".equals(jComboBox3.getSelectedItem().toString()))
-        {
-            cero++;
-        }
-        else if(c.Buscar("servicio", jComboBox3.getSelectedItem().toString())==false)
-        {
-            cero++;
+            if(c.Buscar("cuenta", jComboBox1.getSelectedItem().toString())==false){
+                cero++;
+            }
+            if(c.Buscar("documento", c.lista.get(jComboBox2.getSelectedIndex()-1))==false){
+                cero++;
+            }
+            if(c.Buscar("servicio", c.listaS.get(jComboBox3.getSelectedIndex()-1))==false){
+                cero++;
+            }
         }
         
         if("".equals(jTextField8.getText())&&!"".equals(jTextField7.getText())&&!"".equals(jTextField5.getText()))

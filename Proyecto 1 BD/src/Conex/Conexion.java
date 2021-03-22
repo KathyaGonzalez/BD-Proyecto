@@ -18,8 +18,10 @@ public class Conexion {
     public Connection con;
     private static final String driver="com.mysql.jdbc.Driver";
     private static final String user="root"; //esto no lo toquen, todo va a ser en root supongo, si alguien le colocó otro usuario pues cambienlo
-    private static final String pass="diegoalej."; //aquí tiene que ir su contra personal de la bd
+    private static final String pass=""; //aquí tiene que ir su contra personal de la bd
     private static final String url="jdbc:mysql://localhost:3306/bd_contable";
+    public ArrayList<String> lista= new ArrayList();
+    public ArrayList<String> listaS= new ArrayList();
     public void conector() {
         con=null;
         try{
@@ -54,6 +56,24 @@ public class Conexion {
             return true;
         }
         return false;
+    }
+    //buscar 2
+    public String BuscarC(String tabla, String valor) 
+    {
+        String comparacion="";
+        String sql1="SELECT Nombre_Asignado FROM "+tabla+" WHERE Id="+valor+"";
+        Statement st;
+        try {
+            st = con.createStatement();
+            ResultSet rs= st.executeQuery(sql1);
+            while(rs.next())
+            {
+                comparacion=rs.getString(1);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(Conexion.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return comparacion;
     }
     
     //Consultas
@@ -95,7 +115,8 @@ public class Conexion {
         
         try{
             while(res.next()){
-                ListarDoc.addElement(res.getString("Id"));             
+                ListarDoc.addElement(res.getString("Nombre"));
+                lista.add(res.getString("Id"));
             }
             res.close();
         }catch(SQLException ex){
@@ -111,7 +132,8 @@ public class Conexion {
         
         try{
             while(res.next()){
-                ListarServ.addElement(res.getString("Id"));             
+                ListarServ.addElement(res.getString("Tipo"));
+                listaS.add(res.getString("Id"));
             }
             res.close();
         }catch(SQLException ex){
