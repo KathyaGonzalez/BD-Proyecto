@@ -5,20 +5,35 @@
  */
 package proyecto.pkg;
 
+import Conex.Conexion;
 import java.sql.Date;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
+import java.sql.SQLException;
+import java.util.ArrayList;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
  * @author libreria6
  */
 public class ReporteR extends javax.swing.JInternalFrame {
-
+Conexion c= new Conexion();
+PreparedStatement ps;
+ResultSet rs;
+ResultSetMetaData rsm;
+DefaultTableModel dtm;
     /**
      * Creates new form ReporteR
      */
 public ReporteR() {
+        c.conector();
         initComponents();
+        this.jComboBox1.setModel(c.Obt_Doc());
+        this.jComboBox2.setModel(c.Obt_Codigo());
+        this.jComboBox3.setModel(c.Obt_Serv());
         this.jComboBox1.setEnabled(false);
         this.jComboBox2.setEnabled(false);
         this.jComboBox3.setEnabled(false);
@@ -118,7 +133,7 @@ public ReporteR() {
 
         jLabel2.setText("Tipo");
 
-        jComboBox4.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccionar tipo de transacción", "Ingreso", "Egreso" }));
+        jComboBox4.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccionar tipo de transacción", "Egreso", "Ingreso" }));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -214,18 +229,111 @@ public ReporteR() {
     }//GEN-LAST:event_jCheckBox2ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        String select="SELECT ";
+        String fr="FROM transaccion ";
+        String campos="* "; //aquí se deberían agrear los campos que se quieran mostrar
+        String condicionales="WHERE ";
+        String sentencia;
+        int contador=0;
         // TODO add your handling code here:
         //Rango de fecha
-        java.util.Date fechaInicial = jDateChooser1.getDate();
-        long d = fechaInicial.getTime();
-        java.sql.Date fecha = new java.sql.Date(d);
-        //JOptionPane.showMessageDialog(null, fecha);//fecha en formato Año-Mes-Día
-        //--------------------------
-        java.util.Date fechaFinal = jDateChooser2.getDate();
-        long d1 = fechaFinal.getTime();
-        java.sql.Date fecha1 = new java.sql.Date(d1);
-        //JOptionPane.showMessageDialog(null, fecha1);//fecha en formato Año-Mes-Día
+        if((jDateChooser1.getDate()!=null)&&(jDateChooser2.getDate()!=null))
+        {
+            contador++;
+            java.util.Date fechaInicial = jDateChooser1.getDate();
+            long d = fechaInicial.getTime();
+            java.sql.Date fecha = new java.sql.Date(d);
+            JOptionPane.showMessageDialog(null, fecha);//fecha en formato Año-Mes-Día
+            //--------------------------
+            java.util.Date fechaFinal = jDateChooser2.getDate();
+            long d1 = fechaFinal.getTime();
+            java.sql.Date fecha1 = new java.sql.Date(d1);
+            JOptionPane.showMessageDialog(null, fecha1);//fecha en formato Año-Mes-Día
+            condicionales=condicionales+"Fecha BETWEEN '"+fecha+"' AND '"+fecha1+"' ";    
+        }
+        if(jCheckBox1.isSelected())
+        {  
+           if(jComboBox1.getSelectedIndex()>0)
+           {
+               Integer documento_Id=Integer.parseInt(c.lista.get(jComboBox1.getSelectedIndex()-1));
+                if(contador!=0)
+                {
+                    condicionales=condicionales+"AND ";
+                }
+                condicionales=condicionales+"documento_Id = "+documento_Id+" ";
+                contador++;
+           }
+        }
+        if(jCheckBox2.isSelected())
+        {  
+           if(jComboBox2.getSelectedIndex()>0)
+           {
+               Integer cuenta_No=Integer.parseInt(jComboBox2.getSelectedItem().toString());
+                if(contador!=0)
+                {
+                    condicionales=condicionales+"AND ";
+                }
+                condicionales=condicionales+"cuenta_No = "+cuenta_No+" ";
+                contador++;
+           }
+        }
+        if(jCheckBox3.isSelected())
+        {  
+           if(jComboBox3.getSelectedIndex()>0)
+           {
+               Integer servicio_Id=Integer.parseInt(c.listaS.get(jComboBox3.getSelectedIndex()-1));
+                if(contador!=0)
+                {
+                    condicionales=condicionales+"AND ";
+                }
+                condicionales=condicionales+"servicio_Id = "+servicio_Id+" ";
+                contador++;
+           }
+        }
+        if(jComboBox4.getSelectedIndex()>0)
+        {
+           Integer Tipo=jComboBox4.getSelectedIndex()-1;
+            if(contador!=0)
+            {
+                condicionales=condicionales+"AND ";
+            }
+            condicionales=condicionales+"Tipo = "+Tipo+" "; 
+            contador++;
+        }
+        sentencia=select+campos+fr;
+        if (contador!=0)
+        {
+            sentencia=sentencia+condicionales;
+        }
+        System.out.println(sentencia);
         
+        
+        // aquí viene lo de la tabla
+        
+        try{
+            
+            //Impresion en orden
+           ps = (PreparedStatement) c.con.prepareStatement(sentencia);
+           rs=ps.executeQuery();
+           rsm = (ResultSetMetaData)rs.getMetaData();
+           ArrayList<Object[]> data = new ArrayList<> ();
+           while(rs.next()){
+               Object[] rows = new Object[rsm.getColumnCount()];
+               for (int i=0; i<rows.length; i++){
+                   rows[i] = rs.getObject(i+1);
+               }
+               data.add(rows);
+           }
+           dtm=(DefaultTableModel)this.jTable1.getModel();
+           for(int i=0; i<data.size(); i++){
+               dtm.addRow(data.get(i));
+           }   
+        }catch (SQLException e){
+            JOptionPane.showMessageDialog(rootPane, e.getMessage());
+        }
+        
+//############################ AQUI SE VIENEN LOS IF A LO PENDEJO
+
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
